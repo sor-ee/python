@@ -13,6 +13,14 @@ def update():
         apple.x -= 10
     elif (keyboard.RIGHT):
         apple.x += 10
+    if apple.x < apple.width/2:
+        apple.x = apple.width/2
+    elif apple.x > WIDTH - apple.width/2:
+        apple.x = WIDTH - apple.width/2
+    if apple.y < apple.height/2:
+        apple.y = apple.height/2
+    elif apple.y > HEIGHT - apple.height/2:
+        apple.y = HEIGHT - apple.height/2
     if (keyboard.UP):
         apple.y -= 10
     elif (keyboard.DOWN):
@@ -20,17 +28,21 @@ def update():
     #check bullet and move
     if (live_bullet):
         bullet.y -=10
+
         if bullet.y < 0:
             live_bullet = False
         left = monster.x - monster.width/2
         right = monster.x + monster.width/2
+
         if bullet.x >= left and bullet.x <= right:
             top = monster.y - monster.height/2
             bottom = monster.y + monster.height/2
+
             if bullet.y >= top and bullet.y <= bottom:
                 live_bullet = False
                 live_monster = False
                 monster.pos = (-50,-50)
+                sounds.bird.play()
 def on_key_down(key,mod,unicode):
     global bgcolor,live_bullet
     if key == keys.R:
