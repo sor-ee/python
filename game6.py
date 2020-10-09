@@ -5,6 +5,8 @@ def draw():
     apple.draw()
     if live_bullet:
         bullet.draw()
+    if live_monster:
+        monster.draw()
 def update():
     global live_bullet
     if (keyboard.LEFT):
@@ -20,6 +22,15 @@ def update():
         bullet.y -=10
         if bullet.y < 0:
             live_bullet = False
+        left = monster.x - monster.width/2
+        right = monster.x + monster.width/2
+        if bullet.x >= left and bullet.x <= right:
+            top = monster.y - monster.height/2
+            bottom = monster.y + monster.height/2
+            if bullet.y >= top and bullet.y <= bottom:
+                live_bullet = False
+                live_monster = False
+                monster.pos = (-50,-50)
 def on_key_down(key,mod,unicode):
     global bgcolor,live_bullet
     if key == keys.R:
@@ -35,10 +46,12 @@ def on_key_down(key,mod,unicode):
         bullet.pos = apple.pos
 def on_key_up(key,mod):
     pass
-WIDTH = 640
+WIDTH = 640 
 HEIGHT = 480
 apple = Actor('apple',(WIDTH/2,HEIGHT/2))
 bullet = Actor('pic',(-50,-50))
 live_bullet = False
+monster = Actor('apple',(WIDTH/2,40))
+live_monster = True
 bgcolor = (255,255,255)
 pgzrun.go()
